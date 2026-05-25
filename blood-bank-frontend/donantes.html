@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Donantes</title>
+
+    <link rel="icon" href="images/fav-ico-donacion.png" type="image/png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+        }
+
+        .table thead {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn {
+            border-radius: 12px;
+        }
+
+        .modal-content {
+            border-radius: 20px;
+        }
+
+        .dataTables_filter input {
+            border-radius: 10px;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h1 class="fw-bold text-danger">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    Gestión de Donantes
+                </h1>
+
+
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button class="btn btn-outline-danger px-4" onclick="window.location.href='index.html'">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Volver
+                </button>
+
+                <button class="btn btn-danger px-4 shadow" onclick="window.location.href='registrar-donante.html'">
+
+                    <i class="fa-solid fa-user-plus"></i>
+                    Nuevo Donante
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow-lg">
+
+            <div class="card-body">
+
+                <table id="tablaDonantes" class="table table-hover table-bordered align-middle">
+
+                    <thead class="text-center">
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Tipo Sangre</th>
+                            <th>Peso</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Direccion</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tbodyDonantes">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="modal fade" id="modalEditar">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-warning">
+
+                    <h5 class="modal-title">
+
+                        Editar Donante
+
+                    </h5>
+
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+
+                </div>
+
+                <form id="formEditar">
+
+                    <div class="modal-body row g-3">
+
+                        <input type="hidden" id="editarId">
+
+                        <div class="col-md-6">
+                            <label>Nombres</label>
+                            <input type="text" class="form-control" id="editarNombres">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Apellidos</label>
+                            <input type="text" class="form-control" id="editarApellidos">
+                        </div>
+
+                        <div class="col-md-6" style="position: relative;">
+                            <label>Documento</label>
+                            <input type="text" class="form-control" id="editarDocumento" readonly
+                                style="background-color: #e9ecef; cursor: not-allowed;"
+                                title="El documento de identidad no puede ser modificado">
+                        </div>
+
+                        <div class="col-md-6 contenedor-bloqueado" style="position: relative;">
+                            <label>Tipo Sangre</label>
+
+                            <select class="form-select input-bloqueado" id="editarTipo" disabled>
+                                <option value="O_POSITIVO">O+</option>
+                                <option value="O_NEGATIVO">O-</option>
+                                <option value="A_POSITIVO">A+</option>
+                                <option value="A_NEGATIVO">A-</option>
+                                <option value="B_POSITIVO">B+</option>
+                                <option value="B_NEGATIVO">B-</option>
+                                <option value="AB_POSITIVO">AB+</option>
+                                <option value="AB_NEGATIVO">AB-</option>
+                            </select>
+
+                            <div class="bloqueo-click"
+                                style="position: absolute; top: 0; left: 8px; right: 8px; bottom: 0; z-index: 10; cursor: pointer;">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" id="editarTelefono">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Correo</label>
+                            <input type="email" class="form-control" id="editarCorreo">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Direccion</label>
+                            <input type="text" class="form-control" id="editarDireccion">
+                        </div>
+
+                        <div class="col-md-6 contenedor-bloqueado" style="position: relative;">
+                            <label>Fecha de Nacimiento</label>
+                            <input id="editarFechaNacimiento" type="date" class="form-control input-bloqueado" disabled>
+
+                            <div class="bloqueo-click"
+                                style="position: absolute; top: 0; left: 8px; right: 8px; bottom: 0; z-index: 10; cursor: pointer;">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Peso</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="editarPeso">
+                                <span class="input-group-text">Kg</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-warning w-100">
+
+                            <i class="fa-solid fa-pen"></i>
+                            Actualizar Donante
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/donantes.js"></script>
+
+    <script src="js/tokenNotnull.js"></script>
+
+    <script src="js/time-out-invalidate.js"></script>
+    
+
+
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Inventario de Sangre</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" href="images/fav-ico-donacion.png" type="image/png">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+
+    <style>
+      body {
+        background: #f4f6f9;
+      }
+
+      .card {
+        border: none;
+        border-radius: 20px;
+      }
+
+      .table thead {
+        background: #dc3545;
+        color: white;
+      }
+
+      .btn {
+        border-radius: 12px;
+      }
+
+      .modal-content {
+        border-radius: 20px;
+      }
+
+      .dataTables_filter input {
+        border-radius: 10px;
+        padding: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container py-5">
+      <div
+        class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3"
+      >
+        <div>
+          <h1 class="fw-bold text-danger">
+            <i class="fa-solid fa-droplet"></i>
+            Inventario de Sangre
+          </h1>
+          <small class="text-muted">Control de unidades disponibles</small>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button
+            class="btn btn-outline-danger px-4"
+            onclick="window.location.href = 'index.html'"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+            Volver
+          </button>
+
+          <button
+            class="btn btn-danger px-4 shadow"
+            onclick="cargarInventario()"
+          >
+            <i class="fa-solid fa-rotate"></i>
+            Actualizar
+          </button>
+
+          <button
+            class="btn btn-dark px-4 shadow"
+            data-bs-toggle="modal"
+            data-bs-target="#modalRetirar"
+          >
+            <i class="fa-solid fa-hand-holding-droplet"></i>
+            Retirar sangre
+          </button>
+        </div>
+      </div>
+
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <table
+            id="tablaInventario"
+            class="table table-hover table-bordered align-middle text-center"
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tipo Sangre</th>
+                <th>Disponible ML</th>
+                <th>Última actualización</th>
+              </tr>
+            </thead>
+
+            <tbody id="tbodyInventario"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalRetirar">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">
+              <i class="fa-solid fa-droplet"></i>
+              Retirar Sangre
+            </h5>
+
+            <button
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <label class="form-label">Tipo de sangre</label>
+
+            <select id="tipoSangre" class="form-select mb-3">
+              <option value="O_POSITIVO">O+</option>
+              <option value="O_NEGATIVO">O-</option>
+
+              <option value="A_POSITIVO">A+</option>
+              <option value="A_NEGATIVO">A-</option>
+
+              <option value="B_POSITIVO">B+</option>
+              <option value="B_NEGATIVO">B-</option>
+
+              <option value="AB_POSITIVO">AB+</option>
+              <option value="AB_NEGATIVO">AB-</option>
+            </select>
+
+            <label class="form-label">Cantidad (ML)</label>
+
+            <input
+              type="number"
+              id="cantidadMl"
+              class="form-control"
+              placeholder="Ej: 450"
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+
+            <button class="btn btn-danger" onclick="retirarSangre()">
+              <i class="fa-solid fa-check"></i>
+              Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/tokenNotnull.js"></script>
+
+    <script src="js/inventario.js"></script>
+
+    <script src="js/time-out-invalidate.js"></script>
+
+  </body>
+</html>

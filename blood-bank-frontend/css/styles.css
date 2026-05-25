@@ -1,0 +1,43 @@
+body {
+  background: #f5f5f5;
+}
+
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)),
+    url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?q=80&w=1200&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  border: none;
+  border-radius: 20px;
+}
+
+.btn {
+  border-radius: 10px;
+}
+
+
+
+.nav-btn {
+  transition: all 0.3s ease;
+  border-width: 2px;
+}
+
+.nav-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+  letter-spacing: 1px;
+  font-size: 1.4rem;
+}
+
+.navbar {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
