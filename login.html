@@ -6,34 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <link rel="icon" href="images/fav-ico-donacion.png" type="image/png">
 
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+
             background:
-                linear-gradient(rgba(0, 0, 0, 0.55),
-                    rgba(0, 0, 0, 0.55)),
+                linear-gradient(rgba(0, 0, 0, 0.65),
+                    rgba(0, 0, 0, 0.65)),
                 url('images/back_login_register.jpg');
+
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-family: sans-serif;
+            align-items: center;
+
+            font-family: 'Segoe UI', sans-serif;
+
+            padding: 20px;
         }
 
         .side-image {
-            position: absolute;
+            position: fixed;
             top: 0;
-            width: 320px;
+            width: 260px;
             height: 100%;
             object-fit: cover;
-            opacity: 0.25;
-            filter: blur(1px);
+            opacity: 0.15;
+            filter: blur(2px);
+            z-index: 0;
         }
 
         .left {
@@ -45,46 +63,75 @@
         }
 
         .contenedor {
+            width: 100%;
+            max-width: 500px;
             perspective: 2000px;
+            z-index: 2;
         }
 
         .card {
-            width: 100%;
             border: none;
-            border-radius: 24px;
+            border-radius: 28px;
             background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(14px);
+            backdrop-filter: blur(16px);
             color: white;
             overflow: hidden;
-            transform-origin: left center;
-            animation: entrada 1.6s cubic-bezier(.22, 1, .36, 1);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            animation: entrada 1.5s cubic-bezier(.22, 1, .36, 1);
         }
 
         .card-body {
-            padding: 50px;
+            padding: 45px;
         }
 
-        h2 {
+        .welcome-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #ff4d4d, #ff8080);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 77, 0.45);
+        }
+
+        .welcome-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .titulo {
+            font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            font-size: 0.95rem;
+            color: #f1f1f1;
+            margin-bottom: 35px;
         }
 
         .form-control {
             border: none;
             border-radius: 14px;
-            padding: 14px;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.92);
+            font-size: 15px;
         }
 
         .form-control:focus {
             box-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
+            border: none;
         }
 
         .btn-danger {
             border-radius: 14px;
             padding: 14px;
             font-weight: bold;
+            font-size: 16px;
             transition: 0.4s;
         }
 
@@ -103,7 +150,6 @@
         }
 
         @keyframes entrada {
-
             0% {
                 opacity: 0;
                 transform:
@@ -118,7 +164,6 @@
         }
 
         @keyframes pasarHoja {
-
             0% {
                 opacity: 1;
                 transform:
@@ -133,7 +178,59 @@
         }
 
         .pasando {
-            animation: pasarHoja 2s cubic-bezier(.77, 0, .18, 1) forwards;
+            animation:
+                pasarHoja 1.5s cubic-bezier(.77, 0, .18, 1) forwards;
+        }
+
+        @media(max-width: 992px) {
+
+            .side-image {
+                display: none;
+            }
+
+            .card-body {
+                padding: 35px;
+            }
+        }
+
+        @media(max-width: 576px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                border-radius: 22px;
+            }
+
+            .card-body {
+                padding: 28px;
+            }
+
+            .welcome-icon {
+                width: 75px;
+                height: 75px;
+            }
+
+            .welcome-icon i {
+                font-size: 32px;
+            }
+
+            .titulo {
+                font-size: 1.6rem;
+            }
+
+            .subtitulo {
+                font-size: 0.9rem;
+            }
+
+            .form-control {
+                padding: 13px;
+            }
+
+            .btn-danger {
+                padding: 13px;
+            }
         }
     </style>
 
@@ -142,53 +239,60 @@
 <body>
 
     <img class="side-image left" src="images/back_login_register.jpg">
-
     <img class="side-image right" src="images/back_login_register.jpg">
 
-    <div class="container contenedor">
+    <div class="contenedor">
 
-        <div class="row justify-content-center">
+        <div class="card" id="cardLogin">
 
-            <div class="col-md-5">
+            <div class="card-body text-center">
 
-                <div class="card" id="cardLogin">
+                <div class="welcome-icon">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
 
-                    <div class="card-body text-center">
+                <h1 class="titulo">
+                    Banco de Sangre
+                </h1>
 
-                        <h2>
-                            Iniciar Sesión
-                        </h2>
+                <p class="subtitulo">
+                    Bienvenido al sistema de aportes solidarios
+                </p>
 
-                        <form id="loginForm">
+                <form id="loginForm">
 
-                            <div class="mb-3">
+                    <div class="mb-3">
 
-                                <input type="text" id="username" class="form-control" placeholder="Usuario" required>
-
-                            </div>
-
-                            <div class="mb-4">
-
-                                <input type="password" id="password" class="form-control" placeholder="Contraseña"
-                                    required>
-
-                            </div>
-
-                            <button class="btn btn-danger w-100">
-                                Ingresar
-                            </button>
-
-                        </form>
-
-                        <div class="mt-4">
-
-                            <a href="register.html" id="irRegistro">
-                                Crear cuenta nueva
-                            </a>
-
-                        </div>
+                        <input type="text"
+                            id="username"
+                            class="form-control"
+                            placeholder="Usuario"
+                            required>
 
                     </div>
+
+                    <div class="mb-4">
+
+                        <input type="password"
+                            id="password"
+                            class="form-control"
+                            placeholder="Contraseña"
+                            required>
+
+                    </div>
+
+                    <button class="btn btn-danger w-100">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Ingresar
+                    </button>
+
+                </form>
+
+                <div class="mt-4">
+
+                    <a href="register.html" id="irRegistro">
+                        ¿No tienes cuenta? Crear una
+                    </a>
 
                 </div>
 
@@ -213,13 +317,14 @@
 
                 window.location.href = link.href;
 
-            }, 2000);
+            }, 1500);
 
         });
 
     </script>
 
     <script src="js/login.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
